@@ -1,0 +1,37 @@
+To do
+   o    Bounds and masks examples in nlmrt-vignette.
+
+   o    summary() for output from different functions.
+        Should display constraints if possible as per JNMWS codes.
+
+   o    Sort out display in vignette
+
+   o    Origin of NaN's in bounded examples. Can they be avoided?
+
+Changes in nlmrt version 2012-8.04
+   o    Vignette nlmrt-vignette updated.
+
+   o    Functions to convert expression to residual, Jacobian,
+        sum of squares and gradient functions (for use with optimx
+        or nlmrt:nlfb or minpack.lm:nls.lm
+
+   o    The examples in ./inst/examples/ are calling routines that
+        have been renamed. These have, I believe, been fixed.
+
+   o    nlfb() needs an explicit Jacobian function and needs a way
+        to compute numerical Jacobian if omitted. Fixed, I believe.
+
+Changes in nlmrt version 2012-6.01
+
+   o    Removed diagnostic printout of bdmsk in nlfb
+
+Changes in nlmrt version 2012-4.15 
+	   
+   o	Added nlfb to allow functions for residual and Jacobian.
+        These are developed from the expression for the residuals as
+	a model in nlxb. 
+
+   o	Bounds now in wrapnls.
+
+   o	Note misleading trace output in nls() runs with bounds.
+
