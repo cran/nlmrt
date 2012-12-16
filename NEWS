@@ -1,12 +1,25 @@
 To do
-   o    Bounds and masks examples in nlmrt-vignette.
+
+   o    Origin of NaN's in bounded examples. Can they be avoided?
+
+   o    Weighted least squares, especially in nlxb.
+
+Changes in nlmrt version 2012-9.03
+
+   o    More features in summary().
+
+Changes in nlmrt version 2012-9.03
 
    o    summary() for output from different functions.
         Should display constraints if possible as per JNMWS codes.
+        Warnings / Notes fixed re: dependencies in vignette, methods.
 
    o    Sort out display in vignette
+        Note warning "unstated dependencies in vignette"
 
-   o    Origin of NaN's in bounded examples. Can they be avoided?
+Changes in nlmrt version 2012-8.12
+
+   o    Bounds and masks examples in nlmrt-vignette.
 
 Changes in nlmrt version 2012-8.04
    o    Vignette nlmrt-vignette updated.
