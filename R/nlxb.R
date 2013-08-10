@@ -77,8 +77,8 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
     }
     # controls
     ctrl <- list(watch = FALSE, phi = 1, lamda = 1e-04, offset = 100, 
-        laminc = 10, lamdec = 4, femax = 10000, jemax = 5000, 
-        maxlamda <- 1e+60)
+        laminc = 10, lamdec = 4, femax = 10000, jemax = 5000)
+     ##   maxlamda <- 1e+60) ## dropped 130709
     epstol <- (.Machine$double.eps) * ctrl$offset
     ncontrol <- names(control)
     nctrl <- names(ctrl)
@@ -142,6 +142,7 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
     gradexp <- deriv(parse(text = resexp), names(start))  # gradient expression
     resbest <- with(data, eval(parse(text = resexp)))
     ssbest <- crossprod(resbest)
+    ssminval <- ssbest * epstol^4
     feval <- 1
     pbest <- pnum
     feval <- 1  # number of function evaluations
@@ -157,8 +158,8 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
     ssquares <- .Machine$double.xmax  # make it big
     newjac <- TRUE  # set control for computing Jacobian
     eqcount <- 0
-    while ((eqcount < npar) && (feval <= femax) && (jeval <= 
-        jemax)) {
+    while ((ssbest > ssminval) && (eqcount < npar) && (feval <= femax) 
+             && (jeval <= jemax)) {
         if (newjac) 
             {
                 bdmsk <- rep(1, npar)
@@ -177,6 +178,7 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
                 if (any(is.na(Jac))) 
                   stop("NaN in Jacobian")
                 JTJ <- crossprod(Jac)
+                # tmp<-readline("cont.")
                 gjty <- t(Jac) %*% resbest  # raw gradient
                 for (i in 1:npar) {
                   bmi <- bdmsk[i]
@@ -201,7 +203,9 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
                       }
                     }  # bmi
                 }  # end for loop
-                dee <- diag(sqrt(diag(crossprod(Jac))))  # to append to Jacobian
+                JTJnew<-crossprod(Jac)
+                if (npar == 1) dee <- diag(as.matrix(sqrt(diag(crossprod(Jac)))))
+                else dee <- diag(sqrt(diag(crossprod(Jac))))  # to append to Jacobian
             }  # end newjac
         lamroot <- sqrt(lamda)
         JJ <- rbind(Jac, lamroot * dee, lamroot * phiroot * diag(npar))  # build the matrix
@@ -209,6 +213,7 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
         rplus <- c(resbest, rep(0, 2 * npar))
         delta <- try(qr.coef(JQR, -rplus))  # Note appended rows of y)
         if (class(delta) == "try-error") {
+            stop("qr.coef failed")
             if (lamda < 1000 * .Machine$double.eps) 
                 lamda <- 1000 * .Machine$double.eps
             lamda <- laminc * lamda
@@ -232,8 +237,8 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
                 newjac <- FALSE  # increasing lamda -- don't re-evaluate
                 if (trace) 
                   cat(" Uphill search direction\n")
-                if (lamda > maxlamda) 
-                  eqcount <- npar  # force stop on big lamda
+                ## if (lamda > maxlamda) 
+                ##   eqcount <- npar  # force stop on big lamda
             } else {
                 # downhill
                 delta[maskidx] <- 0
@@ -319,7 +324,7 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
     pnum <- as.vector(pnum)
     names(pnum) <- pnames
     result <- list(resid = resbest, jacobian = Jac, feval = feval, 
-        jeval = jeval, coeffs = pnum, ssquares = ssbest, lower=lower, upper=upper, maskidx=maskidx)
+        jeval = jeval, coefficients = pnum, ssquares = ssbest, lower=lower, upper=upper, maskidx=maskidx)
     class(result) <- "nlmrt"
     result
 }

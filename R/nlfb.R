@@ -67,7 +67,7 @@ if (trace) {
     laminc=10,
     lamdec=4, # use decreased_lamda<-lamda*lamdec/laminc
     femax=10000,
-    jemax=5000, 
+    jemax=5000,
     ndstep=1e-7 # numerical jacobian step
    )
    epstol<-(.Machine$double.eps)*ctrl$offset
@@ -125,6 +125,7 @@ if (trace) {
 #    cat("resbest:")
 #    print(resbest)
     ssbest<-crossprod(resbest)
+    ssminval <- ssbest*epstol^4
     feval<-1
     pbest<-pnum
     feval<-1 # number of function evaluations
@@ -138,7 +139,7 @@ if (trace) {
     ssquares<-.Machine$double.xmax # make it big
     newjac<-TRUE # set control for computing Jacobian
     eqcount<-0
-    while ((eqcount < npar) && (feval<=femax) && (jeval<=jemax)) {
+    while ((ssbest > ssminval) && (eqcount < npar) && (feval<=femax) && (jeval<=jemax)) {
        if (newjac) {
           bdmsk<-rep(1,npar)
           bdmsk[maskidx]<-0
@@ -150,8 +151,6 @@ if (trace) {
           }
           if (numjac) Jac<-myjac(pbest, rfn=resfn, bdmsk=bdmsk, resbest=resbest, ...)
           else Jac<-jacfn(pbest, ...)
-##          cat("Jac:")
-##          print(Jac)
           jeval<-jeval+1 # count Jacobians
           if (any(is.na(Jac))) stop("NaN in Jacobian")
           JTJ<-crossprod(Jac)
@@ -173,7 +172,8 @@ if (trace) {
                 }
              } # bmi
           } # end for loop
-          dee<-diag(sqrt(diag(crossprod(Jac)))) # to append to Jacobian
+          if (npar == 1) dee <- diag(as.matrix(sqrt(diag(crossprod(Jac)))))
+          else dee <- diag(sqrt(diag(crossprod(Jac))))  # to append to Jacobian
        } # end newjac
        lamroot<-sqrt(lamda)
        JJ<-rbind(Jac,lamroot*dee, lamroot*phiroot*diag(npar)) # build the matrix
@@ -265,7 +265,7 @@ if (trace) {
     pnum<-as.vector(pnum)
     names(pnum) <- pnames
     result <- list(resid = resbest, jacobian = Jac, feval = feval, 
-        jeval = jeval, coeffs = pnum, ssquares = ssbest, lower=lower, upper=upper, maskidx=maskidx)
+        jeval = jeval, coefficients = pnum, ssquares = ssbest, lower=lower, upper=upper, maskidx=maskidx)
     class(result) <- "nlmrt"
     result
 }
