@@ -58,11 +58,17 @@
       \item{\code{offset}}{Shift to test for floating-point equality. Default is 100.}
       \item{\code{laminc}}{Factor to use to increase lamda. Default is 10.}
       \item{\code{lamdec}}{Factor to use to decrease lamda is lamdec/laminc. Default lamdec=4.}
-      \item{\code{femax}}{Maximum function (sum of squares) evaluations. Default is 10000, which
-            is extremely aggressive.}
+      \item{\code{femax}}{Maximum function (sum of squares) evaluations. Default is 10000,
+            which is extremely aggressive.}
       \item{\code{jemax}}{Maximum number of Jacobian evaluations. Default is 5000.}
       \item{\code{ndstep}}{Stepsize to use to computer numerical Jacobian approximatin. Default
             is 1e-7.}
+      \item{\code{rofftest}}{Default is TRUE. Use a termination test of the relative offset 
+            orthogonality type. Useful for nonlinear regression problems.}
+      \item{\code{smallsstest}}{Default is TRUE. Exit the function if the sum of squares falls
+            below (100 * .Machine$double.eps)^4 times the initial sumsquares. This is a test
+            for a ``small'' sum of squares, but there are problems which are very extreme 
+            for which this control needs to be set FALSE.}
      }
 }
 
@@ -77,8 +83,7 @@
     \code{nlfb} attempts to solve the nonlinear sum of squares problem by using
     a variant of Marquardt's approach to stabilizing the Gauss-Newton method using
     the Levenberg-Marquardt adjustment. This is explained in Nash (1979 or 1990) in
-    the sections that discuss Algorithm 23. (?? do we want a vignette. Yes, because
-    folk don't have access to book easily, but finding time.)
+    the sections that discuss Algorithm 23.
 
     In this code, we solve the (adjusted) Marquardt equations by use of the 
     \code{qr.solve()}. Rather than forming the J'J + lambda*D matrix, we augment
@@ -86,7 +91,7 @@
 }
 \value{
   A list of the following items
-  \item{coeffs}{A named vector giving the parameter values at the supposed solution.}
+  \item{coefficients}{A named vector giving the parameter values at the supposed solution.}
   \item{ssquares}{The sum of squared residuals at this set of parameters.}
   \item{resid}{The residual vector at the returned parameters.}
   \item{jacobian}{The jacobian matrix (partial derivatives of residuals w.r.t. the parameters)

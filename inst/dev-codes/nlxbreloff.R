@@ -77,8 +77,7 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
     }
     # controls
     ctrl <- list(watch = FALSE, phi = 1, lamda = 1e-04, offset = 100, 
-        laminc = 10, lamdec = 4, femax = 10000, jemax = 5000, rofftest = TRUE, 
-        smallsstest = TRUE)
+        laminc = 10, lamdec = 4, femax = 10000, jemax = 5000, rofftest = TRUE)
      ##   maxlamda <- 1e+60) ## dropped 130709
     epstol <- (.Machine$double.eps) * ctrl$offset
     ncontrol <- names(control)
@@ -145,7 +144,6 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
     ssbest <- crossprod(resbest)
     ss0 <- ssbest + 1.0 # a base value
     ssminval <- ssbest * epstol^4
-    if (trace) cat("ssminval =",ssminval,"\n")
     feval <- 1
     pbest <- pnum
     feval <- 1  # number of function evaluations
@@ -162,10 +160,8 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
     newjac <- TRUE  # set control for computing Jacobian
     eqcount <- 0
     roffstop <- FALSE
-    smallstop <- FALSE
-    while ((! roffstop) && (eqcount < npar) 
-             && (feval <= femax) && (jeval <= jemax)
-             && (! smallstop) ) {
+    while ((! roffstop) && (ssbest > ssminval) && (eqcount < npar) 
+             && (feval <= femax) && (jeval <= jemax)) {
         if (newjac) 
             {
                 bdmsk <- rep(1, npar)
@@ -234,8 +230,8 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
         } else {
             # solution OK
             gproj <- crossprod(delta, gjty)
-            gangle <- gproj/sqrt(crossprod(gjty) * crossprod(delta))
-            gangle <- 180 * acos(sign(gangle)*min(1, abs(gangle)))/pi
+            gangle <- 180 * acos(gproj/sqrt(crossprod(gjty) * 
+                crossprod(delta)))/pi
             if (trace) 
                 cat("gradient projection = ", gproj, " g-delta-angle=", 
                   gangle, "\n")
@@ -316,7 +312,6 @@ nlxb <- function(formula, start, trace = FALSE, data = NULL,
                         showpoint(ssquares, pnum)
                       }
                       ssbest <- ssquares
-                      if (ctrl$smallsstest) { smallstop<-(ssbest <= ssminval) }
                       resbest <- resid
                       pbest <- pnum
                       newjac <- TRUE

@@ -113,6 +113,8 @@ ydat  <-  c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443,
           38.558, 50.156, 62.948, 75.995, 91.972) # for testing
 y  <-  ydat  # for testing
 tdat  <-  seq_along(ydat) # for testing
+eunsc  <-   y ~ b1/(1+b2*exp(-b3*tt))
+
 
 
 \dontrun{
@@ -122,8 +124,6 @@ tdat  <-  seq_along(ydat) # for testing
 tt  <-  tdat
 # A simple starting vector -- must have named parameters for nlxb, nls, wrapnls.
 start1  <-  c(b1=1, b2=1, b3=1)
-
-eunsc  <-   y ~ b1/(1+b2*exp(-b3*tt))
 
 cat("GLOBAL DATA\n")
 
@@ -394,17 +394,17 @@ cat("TRY MASKS ONLY\n")
 
 an1xm3 <- try(nlxb(escal, start1, trace=traceval, data=weeddata1, 
                    masked=c("b3")))
-print(an1xm3)
+printsum(an1xm3)
 an1fm3 <- try(nlfb(start1, shobbs.res, shobbs.jac, trace=traceval, 
                    data=weeddata1, maskidx=c(3)))
-print(an1fm3)
+printsum(an1fm3)
 
 an1xm1 <- try(nlxb(escal, start1, trace=traceval, data=weeddata1, 
                    masked=c("b1")))
-print(an1xm1)
+printsum(an1xm1)
 an1fm1 <- try(nlfb(start1, shobbs.res, shobbs.jac, trace=traceval, 
                    data=weeddata1, maskidx=c(1)))
-print(an1fm1)
+printsum(an1fm1)
 
 } # end dontrun
 
@@ -430,7 +430,7 @@ cat("\n\n")
 
 fit1  <-  nlxb(y ~ (a+b*exp(-c*x)), data = penetrationks28, 
    start = c(a=0,b=1,c=1), trace = TRUE) 
-print(fit1)
+printsum(fit1)
 
 mexprn <- "y ~ (a+b*exp(-c*x))"
 pvec <- c(a=0,b=1,c=1)

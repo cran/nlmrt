@@ -45,7 +45,7 @@ print(strwrap(anlsx))
 ###################################################
 ### code chunk number 6: chunk06
 ###################################################
-awnls <- wrapnls(regmod, start=ones, data=pastured)
+awnls <- wrapnls(regmod, start=ones, data=pastured, control=list(rofftest=FALSE))
 print(awnls)
 cat("Note that the above is just the nls() summary result.\n")
 
