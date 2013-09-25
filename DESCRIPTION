@@ -1,8 +1,8 @@
 Package: nlmrt
 Type: Package
-Title: Functions for nonlinear least squares solutions
-Version: 2013-9.24
-Date: 2013-09-24
+Title: Functions for Nonlinear Least Squares Solutions
+Version: 2013-9.25
+Date: 2013-09-25
 Authors@R: c( person(given = c("John", "C."), family = "Nash", role =
         c("aut", "cre"), email = "nashjc@uottawa.ca"))
 Maintainer: John C. Nash <nashjc@uottawa.ca>
@@ -12,14 +12,18 @@ Description: nlmrt provides tools for working with nonlinear least squares probl
       residual problems, nlmrt is quite happy to solve them. It also attempts to be
       more robust in finding solutions, thereby avoiding 'singular gradient' messages
       that arise in the Gauss-Newton method within nls(). The Marquardt-Nash approach
-      in nlmrt generally works more reliably to get a solution, though this may be 
-      one of a set of possibilities, and may also be statistically unsatisfactory.
+      in nlmrt generally works more reliably to get a solution, though this solution
+      may be one of a set of possibilities, and may also be statistically unsatisfactory.
+      Because of the intended aggressive policy to find solutions, the approach may
+      use additional and unnecessary function and Jacobian evaluations.
+      Note that the Jacobian function is developed using analytic expressions rather
+      than numerical approximations if this is possible.
       Added print and summary as of August 28, 2012.
 License: GPL-2
 Depends: R (>= 2.15.0)
 Suggests: minpack.lm, optimx, Rvmmin, Rcgmin, numDeriv
-Packaged: 2014-04-28 17:58:35 UTC; john
 Author: John C. Nash [aut, cre]
 NeedsCompilation: no
+Packaged: 2014-12-04 18:23:42 UTC; john
 Repository: CRAN
-Date/Publication: 2014-05-05 07:16:10
+Date/Publication: 2014-12-05 23:48:42

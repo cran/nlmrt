@@ -1,6 +1,6 @@
-eecb866f99d65491d150e09bd7d9f1a0 *DESCRIPTION
+74bfea64e931961644d24b039f55137f *DESCRIPTION
 1be926e577bd3a5ab52d877ca320f77a *NAMESPACE
-2ce53dfa9f263947ace3b1088762d007 *NEWS
+30d8d677813fe539e540610647d99398 *NEWS
 70795fde067a3af7d19d6b68d91718f9 *R/model2grfun.R
 e4a3a3047df77dbe42c67d1959ac5683 *R/model2jacfun.R
 17a57ef020b3ad64d9ad7ba199c51d7b *R/model2resfun.R
@@ -11,7 +11,7 @@ a8a677e3cfac80e5283d694fdcaa89dc *R/nlfb.R
 ed50cac3d54136ae7a39768666a40e97 *R/nlmrt.R
 73adfbd1474b5a5ebd296056a6ebb40c *R/nlxb.R
 83a53b9f13e64d560e8c11f9f0503223 *R/wrapnls.R
-8309e96100642706184c8b20b8dec23d *build/vignette.rds
+344d73b9c2153ec1e8e52380867b444e *build/vignette.rds
 65e5fe69350d3aae54eeca67dc841b32 *inst/dev-codes/f2f.R
 5a9a89a2860b508e172b4f2316a35e46 *inst/dev-codes/f2ftext.R
 720ad6b821b9c8d8d7ca07492b670690 *inst/dev-codes/form2resfromHadley.txt
@@ -67,5 +67,5 @@ ae555df69410b9b5e44ba9cb31e17e3a *man/nlmrt-package.Rd
 5b4ef4fdca002140af5f3682db27e0d5 *man/print.nlmrt.Rd
 c727a9b78a003ff29cf905984bf7ee89 *man/summary.nlmrt.Rd
 67a994f3e5b4616bf75159f31b6384a5 *man/wrapnls.Rd
-4bec4eb85c4a6d2e6637da0d62b5abf8 *vignettes/nlmrt-vignette.Rnw
+e266559dcc56e8ae009431da112c3f29 *vignettes/nlmrt-vignette.Rnw
 607d85f40ddb5580dd7dafc3e9552e33 *vignettes/nlpd.bib
