@@ -131,6 +131,7 @@ valjjac <- jjac(ones, yield=pastured$yield, time=pastured$time)
 cat("valjac:")
 print(valjjac)
 # Now compute the numerical approximation
+require(numDeriv)
 Jn <- jacobian(jres, ones, , yield=pastured$yield, time=pastured$time)
 cat("maxabsdiff=",max(abs(Jn-valjjac)),"\n")
 

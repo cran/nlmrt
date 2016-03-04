@@ -1,8 +1,12 @@
 To do
 
+   o    1-sided model expressions -- easy to do, but needs to be done.
+
    o    Origin of NaN's in bounded examples. Can they be avoided?
 
    o    Handling of NaN in Jacfun
+
+   o    Fixup inst/examples/. Maybe create tests.
 
    o    Option for numerical Jacobian -- control numJac = TRUE?, with
 	routine in nlmrt.R ?? elsewhere.
@@ -16,12 +20,24 @@ To do
 
    o    Issue when npar = 1
 
-   o    check and fix examples?
 
-Changes in nlmrt version 2013-9.25
-   o    Changes made to satisfy CRAN policies regarding DESCRIPTION and
-	NAMESPACE. The code has not been altered, so the version date
-	changed by only 1 day.
+Changes in nlmrt version 2016.3.2
+
+   o    An example from Gabor Grothendieck with 0 sumsquares
+        raised an error in summary.nlmrt() due to crossprod()
+        returning a 1x1 matrix rather than a scalar. Fixed with
+        the use of as.numeric().
+
+   o    NAMESPACE exported summary, print and coef methods replaced
+        with S3method() statements
+
+   o    DESCRIPTION updated to current standards
+
+   o    Minor tweak in vignette (encoding line)
+
+Changes in nlmrt version 2014-7.16
+
+   o    These were, unfortunately, not recorded here
 
 Changes in nlmrt version 2013-8.26
 
